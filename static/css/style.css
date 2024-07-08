@@ -1,0 +1,437 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa; /* Example background color */
+    cursor: none; /* Hide the default cursor */
+}
+
+.custom-cursor {
+    position: fixed;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    mix-blend-mode: difference; /* Ensure visibility on light backgrounds */
+    pointer-events: none; /* Allow interaction with underlying elements */
+    transition: transform 0.2s ease, background-color 0.2s ease; /* Smooth transitions */
+    z-index: 9999; /* Ensure it's above other elements */
+    display: none; /* Initially hide the cursor */
+}
+.custom-cursor.active {
+    display: block; /* Show cursor */
+    transform: translate(-50%, -50%) scale(1.5); /* Adjust transform to center and scale */
+}
+
+
+/* Adjust cursor color based on background */
+body.dark-bg .custom-cursor {
+    background-color: rgba(255, 255, 255, 0.7); /* Lighter color for dark backgrounds */
+}
+
+body.light-bg .custom-cursor {
+    background-color: rgba(0, 0, 0, 0.7); /* Darker color for light backgrounds */
+}
+
+
+
+h1, h2 {
+    color: #008181;
+    margin-top: 20px;
+}
+
+p {
+    color: #333333;
+    margin-bottom: 20px;
+}
+
+footer {
+    background-color: #008181;
+    color: white;
+    padding: 20px 0;
+}
+
+footer a {
+    color: gold;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+.first {
+    margin-top: 60px;
+}
+.navbar {
+    background-color: #333; /* Example background color */
+}
+
+.navbar-list {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.navbar-item {
+    margin-right: 10px; /* Adjust spacing between items */
+}
+
+.navbar-link {
+    display: block;
+    padding: 10px 15px;
+    color: #fff; /* Example text color */
+    text-decoration: none;
+}
+
+.navbar-link:hover {
+    background-color: #555; /* Example hover background color */
+}
+.navbar1 {
+    background-color: rgba(0, 0, 0, 0.699); /* Initial tinted black background */
+    color: white;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navbar1.fixed-top {
+    background-color: rgba(0, 0, 0, 0.699); /* Tinted black background on scroll */
+    color: white;
+}
+
+.navbar1 li {
+    color: white;
+    list-style: none;
+}
+
+.navbar1 a {
+    color: white;
+    margin-left: 10px;
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.navbar1 a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    display: block;
+    margin-top: 5px;
+    right: 50%;
+    background: white;
+    transition: width 0.6s ease, right 0.6s ease;
+}
+.navbar1 img:hover:after{
+    width: 0%;
+}
+.navbar1 a:hover::after {
+    width: 100%;
+    right: 0;
+}
+
+/* Dropdown on hover */
+.nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* Add arrow next to dropdown items */
+.navbar1 .dropdown-toggle::after {
+    display: none;
+}
+
+/* Change dropdown item color */
+.dropdown-item {
+    color: #008181;
+}
+
+/* Carousel */
+.carousel-item {
+    height: 600px;
+    background: rgba(0, 0, 0); /* Adjust opacity to darken */
+    color: white;
+    position: relative;
+}
+.carousel-item img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-height: 600px;
+    object-fit: cover;
+    width: 100%;
+}
+
+.carousel-caption {
+    position: absolute;
+    bottom: 20%;
+    animation: fadeInUp 2s;
+}
+
+.carousel-caption h5 {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.carousel-caption p {
+    font-size: 1.5rem;
+}
+
+/* Background section with Parallax effect */
+.bg-section {
+    position: relative;
+    background: url('background.jpg') no-repeat center center/cover;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    margin: 40px 0;
+    background-attachment: fixed; /* Parallax effect */
+}
+
+.bg-section .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.bg-section h2 {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.bg-section p {
+    font-size: 1.5rem;
+}
+/* Offer section styles */
+.card {
+    margin-bottom: 30px;
+}
+
+.card-title {
+    color: #cec10f;
+}
+
+.btn-gold {
+    background-color: gold;
+    color: black;
+    border: none;
+}
+
+.btn-gold:hover {
+    background-color: #ccac00;
+    color: white;
+}
+
+/* Ensure each offer box is on a separate line */
+.card {
+    margin-bottom: 30px;
+}
+/* Timeline styles */
+.timeline-section {
+    background-color: #f8f9fa;
+    padding: 50px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.timeline-container {
+    position: relative;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.timeline {
+    position: relative;
+    height: 100vh; /* Full viewport height */
+    width: 4px;
+    background-color: gold;
+    margin: 50px auto;
+}
+
+.milestone {
+    position: absolute;
+    width: 150px;
+    text-align: center;
+    font-size: 14px;
+    transform: translateX(-50%);
+    color: black;
+}
+
+.milestone::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    background-color: gold;
+    border-radius: 50%;
+}
+
+.tracker {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: silver;
+    border-radius: 50%;
+    border: 3px solid goldenrod;
+    transform: translateX(-50%);
+    transition: top 0.3s ease;
+}
+.testimonials-section {
+    background-color: #f8f9fa;
+    padding: 60px 0;
+}
+
+.testimonials-section h2 {
+    color: #333;
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    font-weight: 700;
+}
+
+.testimonial {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.testimonial-content p {
+    font-style: italic;
+    color: #555;
+}
+
+.testimonial-author {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.testimonial-author img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 4px solid #008181;
+}
+
+.testimonial-author h5 {
+    margin-top: 10px;
+    font-size: 1.25rem;
+    color: #333;
+    font-weight: 700;
+}
+
+.testimonial-author p {
+    color: #888;
+    font-size: 1rem;
+}
+.cta-section {
+    background: linear-gradient(135deg, #009688, #004D40);
+    padding: 60px 0;
+    color: #fff;
+}
+
+.cta-section h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.cta-section p {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    line-height: 1.6;
+}
+
+.cta-section .btn-primary {
+    background-color: #00C853;
+    border-color: #00C853;
+    font-size: 1.25rem;
+    padding: 15px 30px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.cta-section .btn-primary:hover {
+    background-color: #009624;
+    transform: scale(1.05);
+}
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+.btn-delete {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.btn-delete:hover {
+    background-color: #c82333;
+}
+
+
+@media (min-width: 768px) {
+    .card {
+        margin-bottom: 30px;
+    }
+}
+@media (min-width: 800px) {
+    .custom-cursor{
+        display: none;
+    }
+    
+}
+/* Animations */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+

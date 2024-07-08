@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/style.css') }}">
+    <style>
+        /* Additional styles and animations */
+        
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .fade-in-up.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-gold {
+            background-color: gold;
+            color: black;
+            border: none;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .btn-gold:hover {
+            background-color: #ccac00;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar1 fixed-top">
+        <a class="navbar-brand cl" href="#"><img src="{{ url_for('static', filename='images/logo.png') }}" alt="Vision Scripts" height="70"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon" style="color: goldenrod;"><i class="fas fa-bars"></i></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link ni" href="{{ url_for('index') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link ni" href="{{ url_for('about') }}">About</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle ni" href="#" id="servicesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Services <i class="fas fa-caret-down"></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="servicesDropdown">
+                        <a class="dropdown-item" href="{{url_for('websitedev')}}" style="color: black;">Website Development</a>
+                        <a class="dropdown-item" href="#" style="color: black;">Social Media Marketing</a>
+                        <a class="dropdown-item" href="#" style="color: black;">Business Management</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle ni" href="#" id="productsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Products <i class="fas fa-caret-down"></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="productsDropdown">
+                        <a class="dropdown-item" href="{{ url_for('marketing') }}" style="color: black;">Marketing</a>
+                        <a class="dropdown-item" href="#" style="color: black;">Branding</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link ni" href="{{ url_for('contact') }}">Contact Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link ni" href="{{ url_for('cart')}}"><i class="fas fa-shopping-cart"></i> Cart</a>
+                </li>
+                {% if username %}
+                    <li class="nav-item">
+                        {% if role == 'admin' %}
+                            <a class="nav-link ni" href="{{ url_for('admin') }}">Welcome, {{ username }}</a>
+                        {% else %}
+                            <a class="nav-link ni" href="#">Welcome, {{ username }}</a>
+                        {% endif %}
+                    </li>
+                    <li class="nav-item"><a class="nav-link ni" href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link ni" href="{{ url_for('login') }}">Login</a></li>
+                    <li class="nav-item"><a class="nav-link ni" href="{{ url_for('register') }}">Register</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Your Cart</h1>
+        <div class="row">
+            {% for item in cart_items %}
+            <div class="col-md-6">
+                <h2>{{ item[1] }}</h2>
+                <p>Description: {{ item[2] }}</p>
+                <p>Price: ₹{{ item[3] }}</p>
+                <p>Quantity: {{ item[8] }}</p>
+                <form action="{{ url_for('remove_from_cart', cart_id=item[0]) }}" method="post">
+                    <button type="submit" class="btn btn-danger">Remove from Cart</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='JS/script.js') }}"></script>
+</body>
+</html>

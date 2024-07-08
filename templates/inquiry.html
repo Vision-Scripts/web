@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Administration</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/style.css') }}">
+    <style>
+        /* Move these styles to styles.css */
+        .popup-form {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border: 2px solid #000;
+            max-height: 80%; /* Set maximum height */
+            overflow-y: auto; /* Enable vertical scrolling */
+            z-index: 1000;
+        }
+
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .edit-form {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="custom-cursor"></div>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar1 fixed-top">
+            <ul class="navbar-list"> <!-- Removed unnecessary classes and applied navbar-list class -->
+                <li class="navbar-item"><a href="{{ url_for('index') }}" class="navbar-link">Home</a></li>
+                <li class="navbar-item active"><a href="{{ url_for('admin') }}" class="navbar-link">Admin</a></li> <!-- Apply active class for highlighting -->
+                <li class="navbar-item"><a href="{{ url_for('product_admin') }}" class="navbar-link">Products</a></li>
+                <li class="navbar-item"><a href="{{ url_for('webserv_admin') }}" class="navbar-link">Web Serv</a></li>
+                <li class="navbar-item"><a href="{{ url_for('inquiry') }}" class="navbar-link">Inquiries</a></li>
+                <li class="navbar-item"><a href="{{ url_for('logout') }}" class="navbar-link">Logout</a></li>
+            </ul>
+        </nav>
+        <div class="container">
+            <h1>Inquiries</h1>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Message</th>
+                        <th>Posted At</th>
+                        <th>Replied</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for inq in inqs %}
+                <tr>
+                    <td>{{ inq[0] }}</td>
+                    <td>{{ inq[1] }}</td>
+                    <td>{{ inq[2] }}</td>
+                    <td>{{ inq[3] }}</td>
+                    <td>{{ inq[4] }}</td>
+                    <td>{{ inq[5] }}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary btn-sm" onclick="toggleEditForm('{{ inq[0] }}')">Reply</button>
+                    </td>
+                </tr>
+                <tr id="edit-form-{{ inq[0] }}" class="edit-form">
+                    <td colspan="7">
+                        <form action="{{ url_for('send_mail', id=inq[0]) }}" method="post">
+                            <input type="hidden" name="email" value="{{ inq[2] }}">
+                            <label for="subject">Subject:</label>
+                            <input type="text" id="subject" name="subject" placeholder="The Subject" required><br><br>
+                            <label for="message">Message:</label>
+                            <textarea id="message" name="message" placeholder="The Reply Mail" required></textarea><br><br>
+                            <button type="submit" class="btn btn-primary btn-sm">Send Mail</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </header>
+    <script src="{{ url_for('static', filename='JS/script.js') }}"></script>
+    <script>
+        function toggleEditForm(id) {
+            var form = document.getElementById('edit-form-' + id);
+            if (form.style.display === 'none' || form.style.display === '') {
+                form.style.display = 'block';
+            } else {
+                form.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

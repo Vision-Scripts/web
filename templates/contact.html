@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Vision Scripts</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/style.css') }}">
+</head>
+<body>
+    <div class="custom-cursor"></div>
+    <nav class="navbar navbar-expand-lg navbar1 fixed-top">
+        <a class="navbar-brand cl" href="#"><img src="{{ url_for('static', filename='images/logo.png') }}" alt="Vision Scripts" height="70"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon" style="color: goldenrod;"><i class="fas fa-bars"></i></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link ni" href="{{ url_for('index') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link ni" href="{{ url_for('about') }}">About</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle ni" href="#" id="servicesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Services <i class="fas fa-caret-down"></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="servicesDropdown">
+                        <a class="dropdown-item" href="{{url_for('websitedev')}}" style="color: black;">Website Development</a>
+                        <a class="dropdown-item" href="#" style="color: black;">Social Media Marketing</a>
+                        <a class="dropdown-item" href="#" style="color: black;">Business Management</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle ni" href="#" id="productsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Products <i class="fas fa-caret-down"></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="productsDropdown">
+                        <a class="dropdown-item" href="{{ url_for('marketing') }}" style="color: black;">Marketing</a>
+                        <a class="dropdown-item" href="#" style="color: black;">Branding</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link ni" href="{{ url_for('contact') }}">Contact Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link ni" href="#"><i class="fas fa-shopping-cart"></i> Cart</a>
+                </li>
+                {% if username %}
+                    <li class="nav-item">
+                        {% if role == 'admin' %}
+                            <a class="nav-link ni" href="{{ url_for('admin') }}">Welcome, {{ username }}</a>
+                        {% else %}
+                            <a class="nav-link ni" href="#">Welcome, {{ username }}</a>
+                        {% endif %}
+                    </li>
+                    <li class="nav-item"><a class="nav-link ni" href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link ni" href="{{ url_for('login') }}">Login</a></li>
+                    <li class="nav-item"><a class="nav-link ni" href="{{ url_for('register') }}">Register</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <div class="container" style="margin-top: 130px">
+        <h1>Contact Us</h1>
+        <p>If you have any questions, feel free to reach out to us.</p>
+        <!-- Contact form -->
+        <form method="POST" action="{{ url_for('contact') }}">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Message:</label>
+                <textarea class="form-control" id="message" name="message" rows="5" placeholder="Enter your message" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center mt-5">
+        <div class="container">
+            <p>&copy; 2024 Vision Scripts</p>
+            <div>
+                <a href="#" class="mx-2"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="mx-2"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="mx-2"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="mx-2"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p>Email: info@visionscripts.com | Phone: (123) 456-7890</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='JS/script.js') }}"></script>
+</body>
+</html>
