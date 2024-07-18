@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>webservs Marketing</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/style.css') }}">
+    <style>
+        /* Additional CSS styles for the marketing page */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            padding-top: 100px; /* Adjust based on your navbar height */
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+        .webserv-container {
+            background-color: #fff;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .webserv-container:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+        }
+        .webserv-image {
+            max-width: 100px;
+            max-height: 100px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+        .webserv-name {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: goldenrod;
+        }
+        .webserv-description {
+            color: #6c757d;
+            margin-bottom: 15px;
+        }
+        .webserv-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: gold;
+            margin-bottom: 10px;
+        }
+        .webserv-discount {
+            font-size: 16px;
+            color: #dc3545;
+        }
+        .btn-buy {
+            background-color: goldenrod;
+            color: #fff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        .btn-cart {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .btn-buy:hover, .btn-cart:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="custom-cursor"></div>
+    <nav class="navbar navbar-expand-lg navbar1 fixed-top">
+        <a class="navbar-brand cl" href="#"><img src="{{ url_for('static', filename='images/logo.png') }}" alt="Vision Scripts" height="70"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon" style="color: goldenrod;"><i class="fas fa-bars"></i></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link ni" href="{{ url_for('index') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link ni" href="{{ url_for('about') }}">About</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle ni" href="#" id="servicesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Services <i class="fas fa-caret-down"></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="servicesDropdown">
+                        <a class="dropdown-item" href="{{url_for('websitedev')}}" style="color: black;">Website Development</a>
+                        <a class="dropdown-item" href="#" style="color: black;">Social Media Marketing</a>
+                        <a class="dropdown-item" href="#" style="color: black;">Business Management</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle ni" href="#" id="productsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Products <i class="fas fa-caret-down"></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="productsDropdown">
+                        <a class="dropdown-item" href="{{ url_for('marketing') }}" style="color: black;">Marketing</a>
+                        <a class="dropdown-item" href="#" style="color: black;">Branding</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link ni" href="{{ url_for('contact') }}">Contact Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link ni" href="#"><i class="fas fa-shopping-cart"></i> Cart</a>
+                </li>
+                {% if username %}
+                    <li class="nav-item">
+                        {% if role == 'admin' %}
+                            <a class="nav-link ni" href="{{ url_for('admin') }}">Welcome, {{ username }}</a>
+                        {% else %}
+                            <a class="nav-link ni" href="#">Welcome, {{ username }}</a>
+                        {% endif %}
+                    </li>
+                    <li class="nav-item"><a class="nav-link ni" href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link ni" href="{{ url_for('login') }}">Login</a></li>
+                    <li class="nav-item"><a class="nav-link ni" href="{{ url_for('register') }}">Register</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="text-center mb-4">webservs Marketing Page</h1>
+    
+        {% for webserv in webservs %}
+        <div class="webserv-container">
+            <div class="row webserv-card" 
+                 data-image="{{ webserv.image_url }}"
+                 data-name="{{ webserv[1] }}"
+                 data-description="{{ webserv[2] }}"
+                 data-price="{{ webserv[3] }}"
+                 data-discount="{{ webserv[6] }}">
+                <div class="col-md-3">
+                    <img class="webserv-image img-fluid" src="{{ webserv.image_url }}" alt="webserv Image">
+                </div>
+                <div class="col-md-6">
+                    <h2 class="webserv-name">{{ webserv[1] }}</h2>
+                    <p class="webserv-description">{{ webserv[2][:100] }}{{ '...' if webserv[2]|length > 100 }}</p>
+                    <p class="webserv-price">Price: ₹{{ webserv[3] }}</p>
+                    <p class="webserv-discount">Discount: {{ webserv[6] }}%</p>
+                </div>
+                <div class="col-md-3 d-flex align-items-center justify-content-end">
+                    <button class="btn btn-buy mr-2">Buy Now</button>
+                    <button class="btn btn-cart">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <!-- JavaScript for handling the pop-up -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='JS/script.js') }}"></script>
+    <script>
+        // JavaScript to handle displaying webserv details in a pop-up
+        $(document).ready(function() {
+            $('.webserv-card').click(function() {
+                var image = $(this).data('image');
+                var name = $(this).data('name');
+                var description = $(this).data('description');
+                var price = $(this).data('price');
+                var discount = $(this).data('discount');
+    
+                // Update the pop-up content
+                $('#webservModal .modal-body').html(`
+                    <img src="${image}" class="img-fluid mb-2" alt="webserv Image">
+                    <h2>${name}</h2>
+                    <p>${description}</p>
+                    <p>Price: ₹${price}</p>
+                    <p>Discount: ${discount}%</p>
+                    <div class="text-right">
+                        <button class="btn btn-buy mr-2">Buy Now</button>
+                        <button class="btn btn-cart">Add to Cart</button>
+                    </div>
+                `);
+    
+                // Show the pop-up
+                $('#webservModal').modal('show');
+            });
+        });
+    </script>
+    
+    <!-- Modal for displaying webserv details -->
+    <div class="modal fade" id="webservModal" tabindex="-1" role="dialog" aria-labelledby="webservModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="webservModalLabel">webserv Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Content will be dynamically filled by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

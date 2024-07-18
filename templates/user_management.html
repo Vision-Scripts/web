@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/style.css') }}">
+    
+</head>
+<body>
+    <div class="custom-cursor"></div>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar1 fixed-top">
+            <ul class="navbar-list"> <!-- Removed unnecessary classes and applied navbar-list class -->
+                <li class="navbar-item"><a href="{{ url_for('index') }}" class="navbar-link">Home</a></li>
+                <li class="navbar-item active"><a href="{{ url_for('admin') }}" class="navbar-link">Admin</a></li> <!-- Apply active class for highlighting -->
+                <li class="navbar-item"><a href="{{ url_for('product_admin') }}" class="navbar-link">Products</a></li>
+                <li class="navbar-item"><a href="{{ url_for('webserv_admin') }}" class="navbar-link">Web Serv</a></li>
+                <li class="navbar-item"><a href="{{ url_for('inquiry') }}" class="navbar-link">Inquiries</a></li>
+                <li class="navbar-item"><a href="{{ url_for('logout') }}" class="navbar-link">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container mt-5">
+        <div class="row mb-3">
+            <div class="col">
+                <h2>User Management</h2>
+            </div>
+            <div class="col text-right">
+                <!-- Add User Button and Filter Dropdown -->
+                <button class="btn btn-primary" data-toggle="modal" data-target="#addUserModal">Add User</button>
+                <div class="dropdown d-inline-block ml-2">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="roleFilterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Filter by Role
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="roleFilterDropdown">
+                        <a class="dropdown-item" href="#" data-role="all">All</a>
+                        <a class="dropdown-item" href="#" data-role="admin">Admin</a>
+                        <a class="dropdown-item" href="#" data-role="customer">Customer</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- User Table -->
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user[0] }}</td>
+                    <td>{{ user[1] }}</td>
+                    <td>{{ user[2] }}</td>
+                    <td>{{ user[4] }}</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editUserModal{{ user[0] }}">Edit</button>
+                        <form action="{{ url_for('delete_user', id=user[0]) }}" method="post" style="display: inline-block;">
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this user?')">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+
+                <!-- Edit User Modal -->
+                <div class="modal fade" id="editUserModal{{ user[0] }}" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel{{ user[0] }}" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <form action="{{ url_for('edit_user', id=user[0]) }}" method="post">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editUserModalLabel{{ user[0] }}">Edit User</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="edit_name{{ user[0] }}">Name</label>
+                                        <input type="text" class="form-control" id="edit_name{{ user[0] }}" name="name" value="{{ user[1] }}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="edit_email{{ user[0] }}">Email address</label>
+                                        <input type="email" class="form-control" id="edit_email{{ user[0] }}" name="email" value="{{ user[2] }}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="edit_password{{ user[0] }}">Password</label>
+                                        <input type="password" class="form-control" id="edit_password{{ user[0] }}" name="password" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="edit_role{{ user[0] }}">Role</label>
+                                        <select class="form-control" id="edit_role{{ user[0] }}" name="role" required>
+                                            <option value="admin" {% if user[4] == 'admin' %} selected {% endif %}>Admin</option>
+                                            <option value="customer" {% if user[4] == 'customer' %} selected {% endif %}>Customer</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Add User Modal -->
+    <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="{{ url_for('add_user') }}" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addUserModalLabel">Add User</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="add_name">Name</label>
+                            <input type="text" class="form-control" id="add_name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="add_email">Email address</label>
+                            <input type="email" class="form-control" id="add_email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="add_password">Password</label>
+                            <input type="password" class="form-control" id="add_password" name="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="add_role">Role</label>
+                            <select class="form-control" id="add_role" name="role" required>
+                                <option value="admin">Admin</option>
+                                <option value="customer">Customer</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add User</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='JS/script.js') }}"></script>
+    <!-- JavaScript for Filtering -->
+    <script>
+        $(document).ready(function() {
+            $('.dropdown-item').on('click', function() {
+                var role = $(this).data('role');
+                if (role === 'all') {
+                    $('tbody tr').show();
+                } else {
+                    $('tbody tr').hide();
+                    $('tbody tr td:nth-child(4)').each(function() {
+                        if ($(this).text() === role) {
+                            $(this).parent().show();
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

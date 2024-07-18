@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Vision Scripts</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/about.css') }}">
+</head>
+<body>
+    <div class="custom-cursor"></div>
+    <!-- Navbar -->
+   
+    <nav class="navbar navbar-expand-lg navbar1 fixed-top">
+        <a class="navbar-brand cl" href="#"><img src="{{ url_for('static', filename='images/logo.png') }}" alt="Vision Scripts" height="70"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon" style="color: goldenrod;"><i class="fas fa-bars"></i></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link ni" href="{{ url_for('index') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link ni" href="{{ url_for('about') }}">About</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle ni" href="#" id="servicesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Services <i class="fas fa-caret-down"></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="servicesDropdown">
+                        <a class="dropdown-item" href="{{url_for('websitedev')}}" style="color: black;">Website Development</a>
+                        <a class="dropdown-item" href="#" style="color: black;">Social Media Marketing</a>
+                        <a class="dropdown-item" href="#" style="color: black;">Business Management</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle ni" href="#" id="productsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Products <i class="fas fa-caret-down"></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="productsDropdown">
+                        <a class="dropdown-item" href="{{ url_for('marketing') }}" style="color: black;">Marketing</a>
+                        <a class="dropdown-item" href="#" style="color: black;">Branding</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link ni" href="{{ url_for('contact') }}">Contact Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link ni" href="#"><i class="fas fa-shopping-cart"></i> Cart</a>
+                </li>
+                {% if username %}
+                    <li class="nav-item">
+                        {% if role == 'admin' %}
+                            <a class="nav-link ni" href="{{ url_for('admin') }}">Welcome, {{ username }}</a>
+                        {% else %}
+                            <a class="nav-link ni" href="#">Welcome, {{ username }}</a>
+                        {% endif %}
+                    </li>
+                    <li class="nav-item"><a class="nav-link ni" href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link ni" href="{{ url_for('login') }}">Login</a></li>
+                    <li class="nav-item"><a class="nav-link ni" href="{{ url_for('register') }}">Register</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+
+    <!-- Main content -->
+    <div class="container abt-first" style="margin-top: 130px;">
+        <h1 class="abt-title">About Us</h1>
+        <p class="abt-text">Welcome to Vision Scripts! At Vision Scripts, we are passionate about transforming businesses through innovative management and cutting-edge marketing strategies. Founded in August 2023 by Atharva Singh, Vision Scripts was born out of a vision to empower businesses to reach their full potential in today’s competitive market.</p>
+        
+        <h2 class="abt-subtitle">Our Story</h2>
+        <p class="abt-text">Atharva Singh, our founder, envisioned a company that not only understands the intricacies of business management but also leverages the power of marketing to create impactful results. With a wealth of experience and a keen eye for detail, Atharva set out to build a team of dedicated professionals who share the same commitment to excellence and innovation.</p>
+        
+        <h2 class="abt-subtitle">Our Mission</h2>
+        <p class="abt-text">Our mission is simple: to help businesses succeed. We believe that every business, regardless of size or industry, has the potential to thrive with the right guidance and strategy. At Vision Scripts, we work closely with our clients to understand their unique needs and challenges, and we tailor our solutions to meet those specific requirements.</p>
+        
+        <h2 class="abt-subtitle">What We Do</h2>
+        <p class="abt-text">Vision Scripts offers a comprehensive range of services designed to enhance every aspect of your business. Our expertise spans across:</p>
+        <ul class="abt-list">
+            <li class="abt-list-item"><strong>Business Management:</strong> We provide strategic planning, operational improvements, and performance management solutions to streamline your business processes and improve efficiency.</li>
+            <li class="abt-list-item"><strong>Marketing Solutions:</strong> From branding and digital marketing to content creation and social media management, we create compelling marketing campaigns that resonate with your target audience and drive growth.</li>
+            <li class="abt-list-item"><strong>Consulting Services:</strong> Our team of experts offers valuable insights and practical advice to help you navigate complex business challenges and seize new opportunities.</li>
+        </ul>
+        
+        <h2 class="abt-subtitle">Why Choose Us?</h2>
+        <ul class="abt-list">
+            <li class="abt-list-item"><strong>Expertise:</strong> Our team comprises seasoned professionals with extensive knowledge and experience in business management and marketing.</li>
+            <li class="abt-list-item"><strong>Customization:</strong> We understand that no two businesses are alike. Our solutions are customized to meet your specific needs and goals.</li>
+            <li class="abt-list-item"><strong>Innovation:</strong> We stay ahead of the curve by continuously exploring new trends and technologies to deliver innovative solutions that give you a competitive edge.</li>
+            <li class="abt-list-item"><strong>Results-Driven:</strong> Our focus is on delivering measurable results that contribute to your business’s success and growth.</li>
+        </ul>
+        
+        <h2 class="abt-subtitle">Our Values</h2>
+        <ul class="abt-list">
+            <li class="abt-list-item"><strong>Integrity:</strong> We conduct our business with the highest level of integrity and transparency.</li>
+            <li class="abt-list-item"><strong>Excellence:</strong> We strive for excellence in everything we do, from the quality of our work to the level of service we provide.</li>
+            <li class="abt-list-item"><strong>Collaboration:</strong> We believe in the power of teamwork and collaboration, both within our company and with our clients.</li>
+            <li class="abt-list-item"><strong>Passion:</strong> We are passionate about what we do, and it shows in our commitment to helping our clients succeed.</li>
+        </ul>
+        
+        <h2 class="abt-subtitle">Join Us on Our Journey</h2>
+        <p class="abt-text">We invite you to join us on our journey as we continue to innovate, inspire, and drive success for businesses worldwide. Whether you’re looking to improve your business operations or create a powerful marketing campaign, Vision Scripts is here to help you achieve your goals.</p>
+        <p class="abt-text">Thank you for choosing Vision Scripts. Together, we can create a vision for your business that leads to lasting success.</p>
+        
+        <p class="abt-text"><strong>Vision Scripts</strong></p>
+        <p class="abt-text">Founded by Atharva Singh in August 2023</p>
+        <p class="abt-text">Transforming Businesses Through Innovative Management and Marketing Strategies</p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center mt-5">
+        <div class="container">
+            <p style="color: white;">&copy; 2024 Vision Scripts</p>
+            <div>
+                <a href="#" class="mx-2"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="mx-2"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="mx-2"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="mx-2"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p style="color: white;">Email: info@visionscripts.com | Phone: (123) 456-7890</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='JS/script.js') }}"></script>
+</body>
+</html>
